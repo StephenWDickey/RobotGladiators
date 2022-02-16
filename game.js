@@ -34,14 +34,17 @@ var fight = function(enemyName) {
                 window.alert(playerName + " has chosen to skip the fight!");
     
                 // skipping penalty, subtract user money
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney-10);
                 console.log("playerMoney", playerMoney);
                 break;
             }
         }
 
         // subtract value of playerAttack from value of enemyHealth, update enemyHealth var
-        enemyHealth = enemyHealth - playerAttack;
+        // will generate random damage value based on player attack
+        var damage = randomNumber(playerAttack - 3, playerAttack);
+
+        enemyHealth = Math.max(0, enemyHealth - damage);
         
         // shows resulting message, note use of trailing and leading spaces
         console.log (playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining." );
@@ -57,7 +60,10 @@ var fight = function(enemyName) {
         }
         
         // subtract value of enemyAttack from playerHealth, update playerHealth var
-        playerHealth = playerHealth - enemyAttack;
+        // this damage variable will give random number
+        var damage = randomNumber(playerAttack - 3, playerAttack);
+
+        playerHealth = Math.max(0, playerHealth - damage);
         
         // show resulting message
         console.log (enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
@@ -73,7 +79,11 @@ var fight = function(enemyName) {
     }  
 };
 
-
+// this is a function to generate random numbers
+var randomNumber = function (min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+    return value;
+};
 
 // this calls the fight function
 // fight();
@@ -109,7 +119,7 @@ var shop = function() {
     // we will put the actions that will follow user response
     switch (shopOptionPrompt) {
         // if the user chooses 'refill'
-        case "REIFLL":
+        case "REFILL":
         case "refill":
             
             // adding if statement so player needs money to shop
@@ -187,8 +197,9 @@ var startGame = function() {
             // new enemy is picked based on index of enemyNames array
             var pickedEnemyName = enemyNames[i];
             
-            // enemy health is reset at fight onset
-            enemyHealth = 50;
+            // enemy health is reset at fight onset, 
+            // this expression will give us a whole number between 0 and 20 then add 40
+            enemyHealth = randomNumber(40, 60);
             
             // pickedEnemyName variable is put into fight function
             fight(pickedEnemyName);
