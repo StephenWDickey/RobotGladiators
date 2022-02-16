@@ -9,15 +9,17 @@ var playerAttack = 10;
 var playerMoney = 10;
 
 //enemy gets starting attributes
-var enemyName = "Roborto";
+var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
 
 // fight variable
-var fight = function() {
+var fight = function(enemyName) {
+
     // tells players they are starting round
     window.alert ("Welcome to Robot Gladiators!");
+
     // new var gives user an interaction
     var promptFight = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
     
@@ -54,19 +56,22 @@ var fight = function() {
         }
     }
 
+    //player chooses to skip
     else if (promptFight === "skip" || promptFight === "SKIP") {
 
-        // confirm if use wants to skip
+        // confirm if user wants to skip
         var confirmSkip = window.confirm("Are you sure you'd like to skip this encounter?");
 
         // if true leave fight
         if (confirmSkip) {
             window.alert(playerName + " has chosen to skip the fight!");
+            
             // skipping penalty, subtract user money
             playerMoney = playerMoney - 2;
         }
     }
 
+    // if they dont skip, the fight function will run again
     else {
         fight();
     }
@@ -77,4 +82,14 @@ var fight = function() {
 
 
 // this calls the fight function
-fight();
+// fight();
+// We are replacing the above function call with a for loop
+for(var i = 0; i < enemyNames.length; i++) {
+    fight(enemyNames[i]);
+}
+
+// Game States
+    // "WIN" - Player robot has defeated all enemy robots
+        // Fight all enemy robots
+        // Defeat each enemy robot
+    // "LOSE" - Player robot's health is zero or less
