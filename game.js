@@ -207,12 +207,26 @@ var enemyInfo = [
 
 // this function will ask if player wants to play again or it will end the game
 var endGame = function() {
-    // if player is alive player wins
-    if (playerInfo.health > 0) {
-        window.alert("Your robot crushed its enemies and saw them driven before it! You have a score of " + playerInfo.money + ".");
+    
+    window.alert("The game is over! Let's see how you did!");
+
+    // check localStorage for high score, if not there use 0
+    var highScore = localStorage.getItem("highscore");
+    if (highscore === null) {
+        highscore = 0;
     }
+
+    // if player has more money than highscore, player has new high score
+    if (playerInfo.money > highScore) {
+        // remember setItem stores key:value pair in local storage
+        localStorage.setItem("highscore", playerInfo.money);
+        localStorage.setItem("name", playerInfo.name);
+
+        alert(playerInfo.name + " now has the new high score of " + playerInfo.money + "!");
+    }
+    // if player does not have more money than highscore
     else {
-        window.alert("Though your robot fought bravely it has perished, it will be sold for scrap metal and you get no earnings. Goodbye.");
+        alert(playerInfo.name + " did not beat high score of " + highScore + ". Maybe next time!" );
     }
 
     // ask player to play again
