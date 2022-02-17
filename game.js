@@ -213,31 +213,15 @@ var endGame = function() {
 var shop = function() {
     
     // ask user what choice they will make
-    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Choose 'REFILL', 'UPGRADE', or 'LEAVE'.");
+    var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Choose 1, 2, or 3.");
+    // convert string to integer
+    shopOptionPrompt = parseInt(shopOptionPrompt);
     
     // we will put the actions that will follow user response
     switch (shopOptionPrompt) {
         // if the user chooses 'refill'
-        case "REFILL":
-        case "refill":
-
-            ///////////////////////////////
-            // all the code below has now been consolidated into the object method
-            // adding if statement so player needs money to shop
-            // if (playerInfo.money >= 7) {
-            
-               // window.alert("Refilling player's health by 20 for 7 money points.");
-
-            
-                // health will increase, money points will be lost
-               // playerInfo.health = playerInfo.health + 20;
-                // playerInfo.money = playerInfo.money -7;
-            // }
-            // else statement if user doesnt have enough money
-            // else {
-                // window.alert("Not enough cash!");
-            // }
-            /////////////////////////////////
+        // making integer inputs instead now
+        case 1:
 
             // object method for refillHealth 
             playerInfo.refillHealth();
@@ -246,34 +230,16 @@ var shop = function() {
 
 
         // user chooses 'upgrade'
-        case "UPGRADE":
-        case "upgrade":
+        case 2:
             
-            //////////////////////////////////
-            // if statement replaced with object method upgradeAttack
-            // adding if statement for upgrade
-            // if (playerInfo.money >= 7) {
-
-                // window.alert("Upgrading attack power by 6 points for 7 money points.");
-
-                // attack power is increased, money points will be lost
-                // playerInfo.attack = playerInfo.attack + 6;
-                // playerInfo.money = playerInfo.money - 7;
-            // }
-
-            // else statement if user doesnt have enough money
-            // else {
-                // window.alert("Not enough cash!");
-            // }
-
             // object method for upgradeAttack
             playerInfo.upgradeAttack();
 
             break;
 
         // user chooses to 'leave'
-        case "LEAVE":
-        case "leave":
+        case 3:
+
             window.alert("You leave the store.");
 
             // user leaves so function will end
