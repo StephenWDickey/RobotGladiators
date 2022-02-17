@@ -52,61 +52,84 @@ var fightOrSkip = function() {
 // fight variable
 var fight = function(enemy) {
 
+    // who goes first?
+    var isPlayerTurn = true;
+
+    // randomly change turn order
+    if (Math.random() > 0.5) {
+        isPlayerTurn = false;
+    }
+
     // we will repeat fight function as long as the following condition is true
     while (playerInfo.health > 0 && enemy.health > 0) {
         
-        // recursive fightOrSkip function replaces if statements that were here
-        if (fightOrSkip()) {
-            // if true, leave fight
-            break;
+        // if isPlayerTurn comes out true
+        if (isPlayerTurn) {
+
+
+            // recursive fightOrSkip function replaces if statements that were here
+            if (fightOrSkip()) {
+                // if true, leave fight
+                break;
+            }
+
+        
+
+            // subtract value of playerAttack from value of enemyHealth, update enemyHealth var
+            // will generate random damage value based on player attack
+            var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+
+            enemy.health = Math.max(0, enemy.health - damage);
+        
+            // shows resulting message, note use of trailing and leading spaces
+            console.log (playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining." );
+        
+        
+            // check enemy health
+            if (enemy.health <= 0) {
+                window.alert(enemy.name + " has died!");
+
+                //award player with money
+                playerInfo.money = playerInfo.money + 20;
+                
+                break;
+        
+            }
+
+            else { 
+                window.alert(enemy.name + " still has " + enemy.health + " health remaining.");
+            }
+        
         }
 
-    }
-
-        // subtract value of playerAttack from value of enemyHealth, update enemyHealth var
-        // will generate random damage value based on player attack
-        var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
-
-        enemy.health = Math.max(0, enemy.health - damage);
-        
-        // shows resulting message, note use of trailing and leading spaces
-        console.log (playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining." );
-        
-        
-        // check enemy health
-        if (enemy.health <= 0) {
-            window.alert(enemy.name + " has died!");
-
-            //aware player with money
-            playerInfo.money = playerInfo.money + 20;
-
-        
-        }
-
-        else { 
-            window.alert(enemy.name + " still has " + enemy.health + " health remaining.");
-        }
-        
-        // subtract value of enemyAttack from playerHealth, update playerHealth var
-        // this damage variable will give random number
-        var damage = randomNumber(enemy.attack - 3, enemy.attack);
-
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
-        
-        // show resulting message
-        console.log (enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
-        
-        // check player health
-        if (playerInfo.health <= 0) {
-            window.alert(playerInfo.name + " has died!");
-            
-        }
-
+        // it is not player's turn
         else {
-            window.alert(playerInfo.name + " still has " + playerInfo.health + " health remaining.");
-        }
-    }  
+            // subtract value of enemyAttack from playerHealth, update playerHealth var
+            // this damage variable will give random number
+            var damage = randomNumber(enemy.attack - 3, enemy.attack);
 
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
+        
+            // show resulting message
+            console.log (enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining.");
+        
+            // check player health
+            if (playerInfo.health <= 0) {
+                window.alert(playerInfo.name + " has died!");
+                
+                break;
+            }
+
+            else {
+                window.alert(playerInfo.name + " still has " + playerInfo.health + " health remaining.");
+            }
+            
+        }  
+        
+        // this will switch turn order for next round
+        isPlayerTurn = !isPlayerTurn;
+    }
+};
 //////////////////////////////////////////////////////////////////
 
 // adding getPlayerName() function to avoid null or blank response
@@ -313,5 +336,3 @@ var startGame = function() {
 
 // calls the startGame function
 startGame();
-
-
